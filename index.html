@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop Watch</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #ffb3b3, #b3cde0, #b3e2b0, #f3e5ab, #d5a6f0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full height viewport */
+            margin: 0;
+        }
+        .box {
+            height: 300px;
+            width: 650px;
+            background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px;
+            position: relative; /* Ensure positioning context */
+            z-index: 1; /* Ensure it's above the background */
+            backdrop-filter: blur(40px);
+            box-shadow: 0 0 0 0 rgba(0,0,0,0);
+        }
+        .box::before {
+            content: '';
+            width: 180px;
+            height: 180px;
+            background: #b3e2b0;
+            border-radius: 5px;
+            position: absolute;
+            left: -50px;
+            top: -50px;
+            z-index: -1;
+        }
+        .box::after {
+            content: '';
+            width: 180px;
+            height: 180px;
+            background: #d5a6f0;
+            border-radius: 50%;
+            position: absolute;
+            right: -30px;
+            bottom: -50px;
+            z-index: -1;
+        }
+        .stop img {
+            height: 70px;
+            width: 70px;
+            margin-top: 170px;
+            margin-left: -300px;
+            cursor: pointer;
+        }
+        .start img {
+            height: 70px;
+            width: 70px;
+            margin-top: 50px;
+            position: absolute;
+            margin-left: -200px;
+            cursor: pointer;
+        }
+        .refresh img {
+            height: 70px;
+            width: 70px;
+            margin-top: 50px;
+            position: absolute;
+            margin-left: -200px;
+            cursor: pointer;
+            margin-left: -100px;
+        }
+        .box h1 {
+            margin-top: 30px;
+            font-size: 90px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 400;
+            color: rgb(41, 11, 11);
+        }
+    </style>
+</head>
+<body>
+    <div class="box" id="clockbox">
+        <h1 id="clock">00:00:00</h1>
+        <div class="stop">
+            <img onclick="watchStop()" id="stop" src="images/stop.webp">
+        </div>
+        <div class="start">
+            <img onclick="startWatch()" id="start" src="images/play.webp">
+        </div>
+        <div class="refresh">
+            <img onclick="restartWatch()" id="refresh" src="images/refresh.png">
+        </div>
+    </div>
+
+    <script>
+        let [seconds, minutes, hours] = [0, 0, 0];
+        let displayTime = document.getElementById("clock");
+        let timer = null;
+
+        function stopWatch() {
+            seconds++;
+            if (seconds == 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes == 60) {
+                    minutes = 0;
+                    hours++;
+                }
+            }
+            let h = hours < 10 ? "0" + hours : hours;
+            let m = minutes < 10 ? "0" + minutes : minutes;
+            let s = seconds < 10 ? "0" + seconds : seconds;
+
+            displayTime.innerHTML = h + ":" + m + ":" + s;
+        }
+
+        function startWatch() {
+            if (timer !== null) {
+                clearInterval(timer);
+            }
+            timer = setInterval(stopWatch, 1000);
+        }
+
+        function watchStop() {
+            clearInterval(timer);
+        }
+
+        function restartWatch() {
+            clearInterval(timer);
+            [seconds, minutes, hours] = [0, 0, 0];
+            displayTime.innerHTML = "00:00:00";
+        }
+    </script>
+</body>
+</html>
