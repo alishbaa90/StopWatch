@@ -8,7 +8,7 @@ Reset: Reset the time to zero.
 Display: Shows the elapsed time in hours, minutes, and seconds.
 User-Friendly Interface: Simple and intuitive design for easy use.
 
-## echnologies Used
+## Technologies Used
 HTML: Structure of the application.
 CSS: Styling and layout.
 JavaScript: Timer functionality and interactivity.
